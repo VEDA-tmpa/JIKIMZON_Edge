@@ -31,7 +31,17 @@ void CaptureHandler::StartCapture()
     cv::Mat frame;
 
     while (true) {
-        cap >> frame;
+        if (!cap.read(frame))
+        {
+            // std::cerr << "Failed to capture frame" << std::endl;
+            continue;
+        }
+
+        if (frame.empty())
+        {
+            //std::cerr << "Empty frame" << std::endl;
+            continue;
+        }
 
         // 전처리
         
