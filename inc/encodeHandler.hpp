@@ -5,6 +5,9 @@ extern "C" {
     #include <libavcodec/avcodec.h>
     #include <libavformat/avformat.h>
     #include <libavutil/imgutils.h>
+    #include <libswscale/swscale.h>
+
+    // int avcodec_open2(AVCodecContext *avctx, AVCodec *codec, AVDictionary **options);
 }
 
 #include <iostream>
@@ -28,11 +31,11 @@ public:
     void encodeFrame(cv::Mat& frame, std::vector<uint8_t>& encodedFrame);
 private:
     void initEncoder();
-
+    SwsContext* mSwsContext;
     AVCodecContext* mCodecContext;
     int mWidth, mHeight, mBitrate, mFps;
     static EncodeHandler* instance;
-    std::ofstream mOutputFile;
+    std::ofstream mFS;
 };
 
 

@@ -20,6 +20,7 @@ void CaptureHandler::StartCapture()
 
     cap.set(cv::CAP_PROP_FRAME_WIDTH, WIDTH);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, HEIGHT);
+    cap.set(cv::CAP_PROP_FPS, 30);
 
     //TcpHandler::GetInstance()->InitSocket();
 
