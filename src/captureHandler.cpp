@@ -11,13 +11,17 @@ CaptureHandler::~CaptureHandler() {}
 
 void CaptureHandler::StartCapture()
 {
-    cv::VideoCapture cap(0);
+    cv::VideoCapture cap(0, cv::CAP_V4L2);
     
     if (!cap.isOpened()) {
         std::cerr << "cap is not opened" << std::endl;
         exit(EXIT_FAILURE);
     }
 
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, WIDTH);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, HEIGHT);
+
+    //TcpHandler::GetInstance()->InitSocket();
 
     int width = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_WIDTH));
     int height = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_HEIGHT));
@@ -25,8 +29,6 @@ void CaptureHandler::StartCapture()
     std::vector<uint8_t> encodedFrame;
 
     cv::Mat frame;
-    // cap >> frame;
-    // std::cout << frame.type() << std::endl;
 
     while (true) {
         cap >> frame;
