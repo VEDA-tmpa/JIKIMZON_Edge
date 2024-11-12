@@ -2,10 +2,7 @@
 
 TcpHandler* TcpHandler::instance = nullptr;
 
-TcpHandler::TcpHandler() 
-{
-    InitSocket();
-}
+TcpHandler::TcpHandler() {}
 
 TcpHandler::~TcpHandler() {}
 
