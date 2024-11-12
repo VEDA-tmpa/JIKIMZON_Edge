@@ -15,7 +15,7 @@ public:
     ~TcpHandler();
 
     void InitSocket();
-    void SendFrame(cv::Mat frame);
+    void SendFrame(const std::vector<uchar>& frame);
 
     static TcpHandler* GetInstance()
     {
@@ -35,7 +35,5 @@ private:
     socklen_t client_len = sizeof(client_addr);
 
 };
-
-TcpHandler* TcpHandler::instance = nullptr;
 
 #endif

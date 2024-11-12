@@ -1,4 +1,6 @@
-#include "tcpHandler.hpp"
+#include "../inc/tcpHandler.hpp"
+
+TcpHandler* TcpHandler::instance = nullptr;
 
 TcpHandler::TcpHandler() 
 {
@@ -39,7 +41,7 @@ void TcpHandler::InitSocket() {
 	printf("Client connected!\n");
 }
 
-void TcpHandler::SendFrame(cv::Mat frame)
+void TcpHandler::SendFrame(const std::vector<uchar>& frame)
 {
     if (clientSock < 0)
     {
@@ -47,9 +49,14 @@ void TcpHandler::SendFrame(cv::Mat frame)
         exit(EXIT_FAILURE);
     }
 
-    int imgSize = frame.total() * frame.elemSize();
+    int imgSize = frame.size();
 
-    if (send(clientSock, frame.data, imgSize, 0) < 0)
+	// if (send(clientSock, &imgSize, sizeof(imgSize), 0) < 0)
+    // {
+    //     perror("send");
+    // }
+
+    if (send(clientSock, frame.data(), imgSize, 0) < 0)
     {
         perror("send");
     }
