@@ -11,13 +11,14 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
 # Executable name
-TARGET = edge
+TARGET = edge.out
 
 # Default rule
 all: $(TARGET)
 
 # Link the object files to create the executable
 $(TARGET): $(OBJS)
+	export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libcamera/v4l2-compat.so
 	$(CXX) -o $@ $^ $(CXXFLAGS)
 
 # Compile each .cpp file into an .o file

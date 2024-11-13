@@ -1,4 +1,4 @@
-#include "../inc/encodeHandler.hpp"
+#include "encodeHandler.hpp"
 
 EncodeHandler* EncodeHandler::instance = nullptr;
 

@@ -8,23 +8,16 @@
 
 class CaptureHandler {
 public:
-    CaptureHandler();
-    ~CaptureHandler();
+    CaptureHandler(const CaptureHandler&) = delete;
+    CaptureHandler& operator=(const CaptureHandler&) = delete;
 
+    static CaptureHandler& GetInstance();
     void StartCapture();
 
-    static CaptureHandler* GetInstance()
-    {
-        if (instance == NULL)
-        {
-            instance = new CaptureHandler();
-        }
-        return instance;
-    }
-
 private:
-    static CaptureHandler* instance;
-
+    CaptureHandler() = default;
+    ~CaptureHandler() = default;
+    static CaptureHandler* sInstance;
 };
 
 #endif

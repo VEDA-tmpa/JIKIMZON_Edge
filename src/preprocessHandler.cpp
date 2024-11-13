@@ -1,4 +1,4 @@
-#include "../inc/preprocessHandler.hpp"
+#include "preprocessHandler.hpp"
 
 PreprocessHandler::PreprocessHandler() {}
 PreprocessHandler::~PreprocessHandler() {}

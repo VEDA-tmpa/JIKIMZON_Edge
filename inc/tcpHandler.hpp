@@ -11,29 +11,24 @@
 
 class TcpHandler {
 public:
-    TcpHandler();
-    ~TcpHandler();
-
+    TcpHandler(const TcpHandler&) = delete;
+    TcpHandler& operator=(const TcpHandler&) = delete;
+    
+    static TcpHandler& GetInstance();
+    
     void InitSocket();
     void SendFrame(const std::vector<uchar>& frame);
 
-    static TcpHandler* GetInstance()
-    {
-        if (instance == NULL)
-        {
-            instance = new TcpHandler();
-        }
-        return instance;
-    }
-
 private:
-    static TcpHandler* instance;
+    TcpHandler() = default;
+    ~TcpHandler() = default;
+    static TcpHandler* sInstance;
 
-    int sockfd;
-    int clientSock;
-    struct sockaddr_in server_addr, client_addr;
-    socklen_t client_len = sizeof(client_addr);
-
+    int mSockfd;
+    int mClientSock;
+    struct sockaddr_in mServerAddr;
+    struct sockaddr_in mClientAddr;
+    socklen_t mClientSockLen = sizeof(mClientAddr);
 };
 
 #endif

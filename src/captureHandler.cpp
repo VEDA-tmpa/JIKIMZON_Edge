@@ -1,13 +1,19 @@
-#include "../inc/captureHandler.hpp"
-#include "../inc/tcpHandler.hpp"
-#include "../inc/encodeHandler.hpp"
+#include "captureHandler.hpp"
+#include "tcpHandler.hpp"
+#include "encodeHandler.hpp"
 
 #include <opencv2/opencv.hpp>
 
-CaptureHandler* CaptureHandler::instance = nullptr;
+CaptureHandler* CaptureHandler::sInstance = nullptr;
 
-CaptureHandler::CaptureHandler() {}
-CaptureHandler::~CaptureHandler() {}
+CaptureHandler& CaptureHandler::GetInstance()
+{
+    if (sInstance == nullptr)
+    {
+        sInstance = new CaptureHandler;
+    }
+    return *sInstance;
+}
 
 void CaptureHandler::StartCapture()
 {
@@ -22,7 +28,7 @@ void CaptureHandler::StartCapture()
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, HEIGHT);
     cap.set(cv::CAP_PROP_FPS, 30);
 
-    //TcpHandler::GetInstance()->InitSocket();
+    TcpHandler::GetInstance().InitSocket();
 
     int width = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_WIDTH));
     int height = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_HEIGHT));
@@ -49,7 +55,10 @@ void CaptureHandler::StartCapture()
         // h.264 압축
         EncodeHandler::GetInstance(width, height, 1000000, 30)->encodeFrame(frame, encodedFrame);
 
+        // 암호화
+        
+
         // tcp 전송
-        // TcpHandler::GetInstance()->SendFrame(encodedFrame);
+        TcpHandler::GetInstance().SendFrame(encodedFrame);
     }
 }

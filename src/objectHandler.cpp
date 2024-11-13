@@ -1,4 +1,4 @@
-#include "../inc/objectHandler.hpp"
+#include "objectHandler.hpp"
 
 ObjectHandler::ObjectHandler() {}
 ObjectHandler::~ObjectHandler() {}
