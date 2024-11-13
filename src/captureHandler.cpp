@@ -22,7 +22,7 @@ void CaptureHandler::StartCapture()
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, HEIGHT);
     cap.set(cv::CAP_PROP_FPS, 30);
 
-    //TcpHandler::GetInstance()->InitSocket();
+    TcpHandler::GetInstance()->InitSocket();
 
     int width = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_WIDTH));
     int height = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_HEIGHT));
@@ -50,6 +50,6 @@ void CaptureHandler::StartCapture()
         EncodeHandler::GetInstance(width, height, 1000000, 30)->encodeFrame(frame, encodedFrame);
 
         // tcp 전송
-        // TcpHandler::GetInstance()->SendFrame(encodedFrame);
+        TcpHandler::GetInstance()->SendFrame(encodedFrame);
     }
 }
