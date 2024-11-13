@@ -1,36 +1,41 @@
-#include "../inc/tcpHandler.hpp"
+#include "tcpHandler.hpp"
 
-TcpHandler* TcpHandler::instance = nullptr;
+TcpHandler* TcpHandler::sInstance = nullptr;
 
-TcpHandler::TcpHandler() {}
-
-TcpHandler::~TcpHandler() {}
+TcpHandler& TcpHandler::GetInstance()
+{
+    if (sInstance == NULL)
+	{
+        sInstance = new TcpHandler;
+    }
+    return *sInstance;
+}
 
 void TcpHandler::InitSocket() {
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
+    mSockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (mSockfd < 0)
 	{
-		perror("socket");
+		std::cerr << "socket: msockfd" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
     // Bind socket
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_addr.s_addr = INADDR_ANY;
-	server_addr.sin_port = htons(PORT);
-	if (bind(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+	mServerAddr.sin_family = AF_INET;
+	mServerAddr.sin_addr.s_addr = INADDR_ANY;
+	mServerAddr.sin_port = htons(PORT);
+	if (bind(mSockfd, (struct sockaddr *)&mServerAddr, sizeof(mServerAddr)) < 0)
 	{
 		perror("bind");
 		exit(EXIT_FAILURE);
 	}
 
 	// Listen for incoming connections
-	listen(sockfd, 5);
+	listen(mSockfd, 5);
 	printf("Waiting for a client to connect...\n");
 
 	// Accept a connection from client
-	clientSock = accept(sockfd, (struct sockaddr *)&client_addr, &client_len);
-	if (clientSock < 0)
+	mClientSock = accept(mSockfd, (struct sockaddr *)&mClientAddr, &mClientSockLen);
+	if (mClientSock < 0)
 	{
 		perror("accept");
 		exit(EXIT_FAILURE);
@@ -40,20 +45,13 @@ void TcpHandler::InitSocket() {
 
 void TcpHandler::SendFrame(const std::vector<uchar>& frame)
 {
-    if (clientSock < 0)
+    if (mClientSock < 0)
     {
-        std::cerr << "not valid sock fd" << std::endl;
+        std::cerr << "not valid client sock" << std::endl;
         exit(EXIT_FAILURE);
     }
 
-    int imgSize = frame.size();
-
-	// if (send(clientSock, &imgSize, sizeof(imgSize), 0) < 0)
-    // {
-    //     perror("send");
-    // }
-
-    if (send(clientSock, frame.data(), imgSize, 0) < 0)
+    if (send(mClientSock, frame.data(), frame.size(), 0) < 0)
     {
         perror("send");
     }

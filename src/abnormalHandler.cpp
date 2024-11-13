@@ -1,4 +1,4 @@
-#include "../inc/abnormalHandler.hpp"
+#include "abnormalHandler.hpp"
 
 AbnormalHandler::AbnormalHandler() {}
 AbnormalHandler::~AbnormalHandler() {}
