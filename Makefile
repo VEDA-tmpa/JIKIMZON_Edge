@@ -18,6 +18,7 @@ all: $(TARGET)
 
 # Link the object files to create the executable
 $(TARGET): $(OBJS)
+	export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libcamera/v4l2-compat.so
 	$(CXX) -o $@ $^ $(CXXFLAGS)
 
 # Compile each .cpp file into an .o file
