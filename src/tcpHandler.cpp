@@ -4,14 +4,15 @@ TcpHandler* TcpHandler::sInstance = nullptr;
 
 TcpHandler& TcpHandler::GetInstance()
 {
-    if (sInstance == NULL)
+    if (sInstance == nullptr)
 	{
         sInstance = new TcpHandler;
     }
     return *sInstance;
 }
 
-void TcpHandler::InitSocket() {
+void TcpHandler::InitSocket()
+{
     mSockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (mSockfd < 0)
 	{

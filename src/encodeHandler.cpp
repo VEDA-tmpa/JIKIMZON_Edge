@@ -14,7 +14,7 @@ EncodeHandler& EncodeHandler::GetInstance()
 EncodeHandler::EncodeHandler(int width, int height, int bitrate, int fps)
                     : mCodecContext(nullptr), mWidth(width), mHeight(height), mBitrate(bitrate), mFps(fps)
 {
-    initEncoder();
+    InitEncoder();
     mFS.open("output.h264", std::ios::binary);
     if (!mFS.is_open())
     {
@@ -37,10 +37,11 @@ EncodeHandler::~EncodeHandler()
     }
 }
 
-void EncodeHandler::initEncoder()
+void EncodeHandler::InitEncoder()
 {
     std::cout << "THIS IS INITENCODER" << std::endl;
     const AVCodec* avCodec = avcodec_find_encoder(AV_CODEC_ID_H264);
+
     if (!avCodec)
     {
         perror("Codec not found");
@@ -73,7 +74,7 @@ void EncodeHandler::initEncoder()
     mSwsContext = sws_getContext(mWidth, mHeight, AV_PIX_FMT_BGR24, mWidth, mHeight, AV_PIX_FMT_YUV420P, SWS_BICUBIC, nullptr, nullptr, nullptr);
 }
 
-void EncodeHandler::encodeFrame(cv::Mat& frame, std::vector<uint8_t>& encodedFrame)
+void EncodeHandler::EncodeFrame(cv::Mat& frame, std::vector<uint8_t>& encodedFrame)
 {
     AVFrame* avFrame = av_frame_alloc();
     if (!avFrame)
