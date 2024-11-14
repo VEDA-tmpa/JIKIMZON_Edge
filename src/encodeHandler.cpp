@@ -1,6 +1,15 @@
 #include "encodeHandler.hpp"
 
-EncodeHandler* EncodeHandler::instance = nullptr;
+EncodeHandler* EncodeHandler::sInstance = nullptr;
+
+EncodeHandler& EncodeHandler::GetInstance()
+{
+    if (sInstance == nullptr)
+        {
+            instance = new EncodeHandler(width, height, bitrate, fps);
+        }
+        return sInstance;
+}
 
 EncodeHandler::EncodeHandler(int width, int height, int bitrate, int fps)
                     : mCodecContext(nullptr), mWidth(width), mHeight(height), mBitrate(bitrate), mFps(fps)
