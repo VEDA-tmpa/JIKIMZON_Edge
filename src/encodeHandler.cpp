@@ -8,7 +8,7 @@ EncodeHandler& EncodeHandler::GetInstance()
         {
             instance = new EncodeHandler(width, height, bitrate, fps);
         }
-        return sInstance;
+    return *sInstance;
 }
 
 EncodeHandler::EncodeHandler(int width, int height, int bitrate, int fps)
