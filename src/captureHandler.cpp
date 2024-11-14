@@ -1,6 +1,7 @@
 #include "captureHandler.hpp"
 #include "tcpHandler.hpp"
 #include "encodeHandler.hpp"
+#include "objectHandler.hpp"
 
 #include <opencv2/opencv.hpp>
 
@@ -29,35 +30,41 @@ void CaptureHandler::StartCapture()
     cap.set(cv::CAP_PROP_FPS, 30);
 
     TcpHandler::GetInstance().InitSocket();
+    ObjectHandler::GetInstance().InitModel("../src/ssd_mobilenet_v2_taco_2018_03_29.pb");
 
     int width = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_WIDTH));
     int height = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_HEIGHT));
 
     std::vector<uint8_t> encodedFrame;
 
-    cv::Mat frame;
+    cv::Mat inFrame;
+    cv::Mat outData;
 
     while (true) {
-        if (!cap.read(frame))
+        if (!cap.read(inFrame))
         {
-            // std::cerr << "Failed to capture frame" << std::endl;
+            //std::cerr << "Failed to capture frame" << std::endl;
             continue;
         }
 
-        if (frame.empty())
+        if (inFrame.empty())
         {
             //std::cerr << "Empty frame" << std::endl;
             continue;
         }
 
-        // 전처리
+        // TODO: 전처리
+
+        // 모델 추론
+        outData = ObjectHandler::GetInstance().DetectObject(inFrame);
+        
+        // TODO: 결과 파싱, json화, 전송
         
         // h.264 압축
-        EncodeHandler::GetInstance(width, height, 1000000, 30)->encodeFrame(frame, encodedFrame);
+        EncodeHandler::GetInstance(width, height, 1000000, 30)->encodeFrame(inFrame, encodedFrame);
 
-        // 암호화
+        // TODO: 암호화
         
-
         // tcp 전송
         TcpHandler::GetInstance().SendFrame(encodedFrame);
     }
