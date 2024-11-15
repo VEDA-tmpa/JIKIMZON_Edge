@@ -5,9 +5,9 @@ EncodeHandler* EncodeHandler::sInstance = nullptr;
 EncodeHandler& EncodeHandler::GetInstance()
 {
     if (sInstance == nullptr)
-        {
-            instance = new EncodeHandler(width, height, bitrate, fps);
-        }
+    {
+        instance = new EncodeHandler(width, height, bitrate, fps);
+    }
     return *sInstance;
 }
 
