@@ -8,7 +8,7 @@ CaptureHandler& CaptureHandler::GetInstance()
 {
     if (sInstance == nullptr)
     {
-        sInstance = new CaptureHandler;
+        sInstance = new CaptureHandler();
     }
     return *sInstance;
 }
@@ -25,8 +25,8 @@ void CaptureHandler::StartCapture()
     }
 
     // 영상 캡쳐 Property 설정 | width, height, fps 설정
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, SIZE::WIDTH);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, SIZE::HEIGHT);
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, size::WIDTH);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, size::HEIGHT);
     cap.set(cv::CAP_PROP_FPS, 30);
 
     cv::Mat frame;
