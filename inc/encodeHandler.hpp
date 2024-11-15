@@ -29,9 +29,15 @@ private:
     static EncodeHandler* sInstance;
 
     void initEncoder();
+
     SwsContext* mSwsContext;
     AVCodecContext* mCodecContext;
-    int mWidth, mHeight, mBitrate, mFps;
+
+    int mWidth;
+    int mHeight;
+    int mBitrate
+    int mFps;
+
     std::ofstream mFS;
 };
 
