@@ -14,7 +14,7 @@ EncodeHandler& EncodeHandler::GetInstance()
 EncodeHandler::EncodeHandler(int width, int height, int bitrate, int fps)
                     : mCodecContext(nullptr), mWidth(width), mHeight(height), mBitrate(bitrate), mFps(fps)
 {
-    InitEncoder();
+    initEncoder();
     mFS.open("output.h264", std::ios::binary);
     if (!mFS.is_open())
     {
@@ -37,7 +37,7 @@ EncodeHandler::~EncodeHandler()
     }
 }
 
-void EncodeHandler::InitEncoder()
+void EncodeHandler::initEncoder()
 {
     std::cout << "THIS IS INITENCODER" << std::endl;
     const AVCodec* avCodec = avcodec_find_encoder(AV_CODEC_ID_H264);

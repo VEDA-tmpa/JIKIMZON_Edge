@@ -28,7 +28,7 @@ private:
     ~EncodeHandler() = default;
     static EncodeHandler* sInstance;
 
-    void InitEncoder();
+    void initEncoder();
     SwsContext* mSwsContext;
     AVCodecContext* mCodecContext;
     int mWidth, mHeight, mBitrate, mFps;
