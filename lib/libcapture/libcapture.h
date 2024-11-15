@@ -1,15 +1,18 @@
-#ifndef TMP_LIBRARY_H
-#define TMP_LIBRARY_H
+#ifndef LIB_CAPTURE_H
+#define LIB_CAPTURE_H
 
-#ifndef __cplusplus
+#include <stdlib.h>
+
+#ifdef __cplusplus
 extern "C" {
 #endif
 
 void externalFunction(int value);
-void InitCapture(cv::VideoCapture* cap, int camIdx);
+void InitCapture(void** cap, int camIdx, int width, int height, int fps);
+void GetFrame(void* cap, unsigned char** buffer, int* rows, int* cols, int* channels);
 
-#ifndef __cplusplus
+#ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // LIB_CAPTURE_H
