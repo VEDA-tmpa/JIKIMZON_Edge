@@ -19,7 +19,8 @@ void CaptureHandler::StartCapture()
 {
     cv::VideoCapture cap(0, cv::CAP_V4L2);
     
-    if (!cap.isOpened()) {
+    if (!cap.isOpened())
+    {
         std::cerr << "cap is not opened" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -37,7 +38,8 @@ void CaptureHandler::StartCapture()
 
     cv::Mat frame;
 
-    while (true) {
+    while (true)
+    {
         if (!cap.read(frame))
         {
             // std::cerr << "Failed to capture frame" << std::endl;

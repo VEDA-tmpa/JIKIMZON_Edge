@@ -1,5 +1,6 @@
 #include "captureHandler.hpp"
 
-int main() {
+int main()
+{
     CaptureHandler::GetInstance().StartCapture();
 }
